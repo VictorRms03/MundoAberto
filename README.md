@@ -1,4 +1,4 @@
-# TrashTrack
+# Mundo Aberto com Three.js
 
 Este é um projeto desenvolvido durante a disciplina de Computação Gráfica no curso de Bacharel em Ciência da Computação. 
 

@@ -3,7 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";  //Para importar outro tipo de objeto, entre na pasta 'loaders' e importe o carregador necessário
 import { FirstPersonControls } from "three/addons/controls/FirstPersonControls.js";
 
-/* Cena, Câmera e Renderizador */
+/* Cena, Câmera, Renderizador e Carregadores */
 
 // Cena
 const scene = new THREE.Scene();
@@ -15,12 +15,8 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-//camera.position.y = 3;
-//camera.position.z = 5;
 
 camera.position.set(0, 1.6, 5);
-
-// Carregar a cena focando na origem
 camera.lookAt(0, 0, 0);
 
 // Renderizador
@@ -31,6 +27,9 @@ document.body.appendChild(renderer.domElement);
 
 // Carregador de Objetos
 const loader = new GLTFLoader();
+
+// Carregador de Textura
+const textureLoader = new THREE.TextureLoader();
 
 /* Controles */
 
@@ -58,10 +57,6 @@ scene.add(directionalLight);
 // Luz ambiente
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
-
-/* Carregador de Textura */
-
-const textureLoader = new THREE.TextureLoader();
 
 /* Objetos */
 

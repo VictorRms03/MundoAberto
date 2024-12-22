@@ -109,10 +109,10 @@ cubeTextura.castShadow = true;
 
 scene.add(cubeTextura);
 
-// Porsche 911
-/*loader.load( './assets/3dModels/porsche_911/scene.gltf', function ( gltf ) {
+// Árvore
+loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 
-  gltf.scene.scale.set(0.1, 0.1, 0.1);
+  gltf.scene.scale.set(1, 1, 1);
 
   scene.add( gltf.scene );
 

@@ -61,8 +61,7 @@ scene.add(ambientLight);
 /* Objetos */
 
 // Solo
-
-const groundGeometry = new THREE.PlaneGeometry(4, 4);
+const groundGeometry = new THREE.PlaneGeometry(7, 7);
 const groundMaterial = new THREE.MeshStandardMaterial( { color: 0xBA8E23 } );
 groundMaterial.side = THREE.DoubleSide; //Apenas para renderizar o outro lado do piso
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -120,7 +119,24 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 
   console.log( error );
 
-} );*/
+} );
+
+// Cabana
+loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
+
+  gltf.scene.scale.set(0.005, 0.005, 0.005); // Tamanho
+
+  gltf.scene.position.set(2, 0.1, 2); // Posição
+
+  gltf.scene.rotation.y = 200; // Rotação
+
+  scene.add( gltf.scene );
+
+}, undefined, function( error ) {
+
+  console.log( error );
+
+} );
 
 /* Função de animação */
 function animar() {

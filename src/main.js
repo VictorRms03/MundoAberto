@@ -47,7 +47,7 @@ FPSControls.enabled = false;
 /* Luzes */
 
 // Luz Direcional
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 10, 5);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
@@ -55,7 +55,7 @@ directionalLight.shadow.mapSize.height = 1024;
 scene.add(directionalLight);
 
 // Luz ambiente
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
 /* Objetos */
@@ -66,14 +66,28 @@ const texturaGrama = textureLoader.load('./assets/textures/Grama/2K/Poliigon_Gra
 const groundMaterial = new THREE.MeshStandardMaterial({ map: texturaGrama });
 groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+
 ground.rotation.x = -Math.PI / 2;
+
 ground.receiveShadow = true;
+ground.castShadow = true;
+
 scene.add( ground );
 
 // Árvores
 loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 
   let treeModel = gltf.scene;
+
+  treeModel.traverse( function(node) {
+    if (node.isMesh) {
+      node.castShadow = true;
+    }
+  });
+
+  treeModel.receiveShadow = true;
+  treeModel.castShadow = true;
+
   treeModel.scale.set(2, 2, 2) // Tamanho
 
   for ( let i=0; i<100; i++ ) {
@@ -95,32 +109,47 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
   }
 
 }, undefined, function( error ) {
-
   console.log( error );
-
 } );
 
 // Cabana
 loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 
-  gltf.scene.scale.set(0.010, 0.010, 0.010); // Tamanho
-  gltf.scene.position.set(2, 0.1, 2); // Posição
-  gltf.scene.rotation.y = 200; // Rotação
+  let shelterModel = gltf.scene;
 
-  scene.add( gltf.scene );
+  shelterModel.scale.set(0.010, 0.010, 0.010); // Tamanho
+  shelterModel.position.set(2, 0.1, 2); // Posição
+  shelterModel.rotation.y = 200; // Rotação
+
+  shelterModel.traverse( function(node) {
+    if ( node.isMesh ) {
+      node.castShadow = true;
+    }
+  });
+
+  scene.add( shelterModel );
 
 }, undefined, function( error ) {
-
   console.log( error );
-
 } );
 
 // Lobo
 loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
-  gltf.scene.scale.set(0.3, 0.3, 0.3);
-  gltf.scene.position.set(0.7, 0, 2);
-  gltf.scene.rotation.y = 61;
-  scene.add(gltf.scene);
+
+  let wolfModel = gltf.scene;
+
+  wolfModel.scale.set(0.3, 0.3, 0.3);
+  wolfModel.position.set(0.7, 0, 2);
+  wolfModel.rotation.y = 61;
+
+  wolfModel.traverse( function(node) {
+    if ( node.isMesh ) {
+      node.castShadow = true;
+    }
+  });
+
+  scene.add( wolfModel );
+
 }, undefined, function (error) {
   console.log(error);
 });

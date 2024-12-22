@@ -63,7 +63,8 @@ scene.add(ambientLight);
 
 // Solo
 const groundGeometry = new THREE.PlaneGeometry(7, 7);
-const groundMaterial = new THREE.MeshStandardMaterial({ color: 0xBA8E23 });
+const texturaGrama = textureLoader.load('./assets/textures/Grama/Poliigon_GrassPatchyGround_4585_Preview1.png')
+const groundMaterial = new THREE.MeshStandardMaterial({ map: texturaGrama });
 groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotation.x = -Math.PI / 2;

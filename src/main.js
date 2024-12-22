@@ -48,7 +48,7 @@ FPSControls.enabled = false;
 /* Luzes */
 
 // Luz Direcional
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
 directionalLight.position.set(5, 10, 5);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
@@ -81,9 +81,19 @@ loader.load('./assets/3dModels/tree/scene.gltf', function (gltf) {
 
 // Cabana
 loader.load('./assets/3dModels/shelter/scene.gltf', function (gltf) {
-  gltf.scene.scale.set(0.005, 0.005, 0.005);
+  gltf.scene.scale.set(0.015, 0.015, 0.015);
   gltf.scene.position.set(2, 0.1, 2);
   gltf.scene.rotation.y = 200;
+  scene.add(gltf.scene);
+}, undefined, function (error) {
+  console.log(error);
+});
+
+// Lobo
+loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
+  gltf.scene.scale.set(0.5, 0.5, 0.5);
+  gltf.scene.position.set(0.7, 0, 2);
+  gltf.scene.rotation.y = 61;
   scene.add(gltf.scene);
 }, undefined, function (error) {
   console.log(error);

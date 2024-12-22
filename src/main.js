@@ -103,7 +103,7 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 // Cabana
 loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 
-  gltf.scene.scale.set(0.015, 0.015, 0.015); // Tamanho
+  gltf.scene.scale.set(0.010, 0.010, 0.010); // Tamanho
   gltf.scene.position.set(2, 0.1, 2); // Posição
   gltf.scene.rotation.y = 200; // Rotação
 
@@ -117,7 +117,7 @@ loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 
 // Lobo
 loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
-  gltf.scene.scale.set(0.5, 0.5, 0.5);
+  gltf.scene.scale.set(0.3, 0.3, 0.3);
   gltf.scene.position.set(0.7, 0, 2);
   gltf.scene.rotation.y = 61;
   scene.add(gltf.scene);

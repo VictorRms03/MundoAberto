@@ -13,6 +13,7 @@ camera.position.z = 5;
 // Renderizador
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 
 
@@ -23,6 +24,10 @@ document.body.appendChild(renderer.domElement);
 // Luz Direcional
 const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 directionalLight.position.set(5, 10, 5);
+
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
 
 scene.add( directionalLight );
 
@@ -41,6 +46,8 @@ const ground = new THREE.Mesh( groundGeometry, groundMaterial );
 
 ground.rotation.x = -Math.PI / 2;
 
+ground.receiveShadow = true;
+
 scene.add( ground );
 
 // Cubo para testes de luz
@@ -50,6 +57,9 @@ const cubeMaterial = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 
 cube.position.y = 1;
+
+cube.receiveShadow = true;
+cube.castShadow = true;
 
 scene.add( cube );
 /* Função de animação */

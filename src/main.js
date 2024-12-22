@@ -133,7 +133,7 @@ loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
   let wolfModel = gltf.scene;
 
   wolfModel.scale.set(0.3, 0.3, 0.3);
-  wolfModel.position.set(0.7, 0, 2);
+  wolfModel.position.set(1, 0, 2);
   wolfModel.rotation.y = 61;
 
   wolfModel.traverse( function(node) {

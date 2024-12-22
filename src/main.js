@@ -84,13 +84,12 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 
   treeModel.scale.set(2, 2, 2) // Tamanho
 
-  for ( let i=0; i<100; i++ ) {
+  for ( let i=0; i<70; i++ ) {
 
     let positionX = Math.random() * ( 3 - (-3) ) + (-3);
     let positionZ = Math.random() * ( 3 - (-3) ) + (-3);
 
-
-    if ( !( positionX > 1.5 && positionX < 2.5 ) && !( positionZ > 1.5 && positionZ < 2.5 ) ) { //Evitar Posição da Cabana
+    if ( !( ( positionX > 1 && positionX < 3.5 ) && ( positionZ > 1 && positionZ < 3.5 ) ) ) { // Evitar Posição da Cabana
 
       let tree = treeModel.clone();
       tree.position.set( positionX , 0 , positionZ ); // Posição

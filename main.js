@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 /* Cena, Câmera e Renderizador */
 
@@ -17,7 +18,10 @@ renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 
 
+/* Controles */
 
+// OrbitControls
+const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 /* Luzes */
 
@@ -69,6 +73,8 @@ function animar() {
   //cube.rotation.x += 0.05;
   //cube.rotation.y += 0.05;
 
+  orbitControls.update();
+  
   renderer.render(scene, camera);
 }
 

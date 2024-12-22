@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";  
 import { FirstPersonControls } from "three/addons/controls/FirstPersonControls.js";
 
@@ -32,9 +31,6 @@ const loader = new GLTFLoader();
 const textureLoader = new THREE.TextureLoader();
 
 /* Controles */
-
-// OrbitControls
-//const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 // FirstPersonControls
 const FPSControls = new FirstPersonControls(camera, renderer.domElement);
@@ -163,7 +159,6 @@ function animar() {
 
   const delta = clock.getDelta();
   FPSControls.update(delta); // Atualiza os controles apenas se habilitado
-  //orbitControls.update();
 
   renderer.render(scene, camera);
 

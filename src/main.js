@@ -63,7 +63,7 @@ scene.add(ambientLight);
 
 // Solo
 const groundGeometry = new THREE.PlaneGeometry(7, 7);
-const texturaGrama = textureLoader.load('./assets/textures/Grama/Poliigon_GrassPatchyGround_4585_Preview1.png')
+const texturaGrama = textureLoader.load('./assets/textures/Grama/2K/Poliigon_GrassPatchyGround_4585_BaseColor.jpg')
 const groundMaterial = new THREE.MeshStandardMaterial({ map: texturaGrama });
 groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -119,17 +119,16 @@ loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 
 /* Função de animação */
 function animar() {
+
   requestAnimationFrame(animar);
 
-  // Calcula o tempo entre os frames
-  const delta = clock.getDelta();
   FPSControls.update(delta); // Atualiza os controles apenas se habilitado
+  //FPSControls.update(delta); // Atualiza os controles apenas se habilitado
 
   renderer.render(scene, camera);
+
 }
 
-// Inicia a animação
-const clock = new THREE.Clock();
 animar();
 
 /* Controle de Mouse e Teclado */

@@ -34,7 +34,7 @@ const textureLoader = new THREE.TextureLoader();
 /* Controles */
 
 // OrbitControls
-const orbitControls = new OrbitControls(camera, renderer.domElement);
+//const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 // FirstPersonControls
 const FPSControls = new FirstPersonControls(camera, renderer.domElement);
@@ -42,7 +42,6 @@ FPSControls.movementSpeed = 5;
 FPSControls.lookSpeed = 0.1;
 FPSControls.lookVertical = true;
 
-// Inicialmente, desativa os controles de FPS
 FPSControls.enabled = false;
 
 /* Luzes */
@@ -69,7 +68,6 @@ groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
-
 scene.add( ground );
 
 // Árvores
@@ -118,12 +116,15 @@ loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 } );
 
 /* Função de animação */
+const clock = new THREE.Clock();
+
 function animar() {
 
   requestAnimationFrame(animar);
 
+  const delta = clock.getDelta();
   FPSControls.update(delta); // Atualiza os controles apenas se habilitado
-  //FPSControls.update(delta); // Atualiza os controles apenas se habilitado
+  //orbitControls.update();
 
   renderer.render(scene, camera);
 

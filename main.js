@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 /* Cena, Câmera e Renderizador */
 
@@ -17,6 +18,8 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 
+// Carregador de Objetos
+const loader = new GLTFLoader();
 
 /* Controles */
 
@@ -66,6 +69,20 @@ cube.receiveShadow = true;
 cube.castShadow = true;
 
 scene.add( cube );
+
+// Porsche 911
+/*loader.load( '3dModels/porsche_911/scene.gltf', function ( gltf ) {
+
+  gltf.scene.scale.set(0.1, 0.1, 0.1);
+
+  scene.add( gltf.scene );
+
+}, undefined, function( error ) {
+
+  console.log( error );
+
+} );*/
+
 /* Função de animação */
 function animar() {
   requestAnimationFrame(animar);

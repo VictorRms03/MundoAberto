@@ -37,10 +37,10 @@ const textureLoader = new THREE.TextureLoader();
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 // FirstPersonControls
-const FPSControls = new FirstPersonControls(camera, renderer.domElement);
+/*const FPSControls = new FirstPersonControls(camera, renderer.domElement);
 FPSControls.movementSpeed = 5;
 FPSControls.lookSpeed = 0.1;
-FPSControls.lookVertical = true;
+FPSControls.lookVertical = true;*/
 
 /* Luzes */
 
@@ -73,8 +73,7 @@ ground.receiveShadow = true;
 scene.add(ground);
 
 // Cubo para testes de luz
-
-const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+/*const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
 const cubeMaterial = new THREE.MeshStandardMaterial( { 
 
   color: 0x00ff00, 
@@ -90,13 +89,10 @@ cube.position.y = 1;
 cube.receiveShadow = true;
 cube.castShadow = true;
 
-scene.add(cube);
+scene.add(cube);*/
 
 // Cubo para teste de textura
-
-const cubeTexture = textureLoader.load(
-  "3dModels/porsche_911/textures/930_chromes_baseColor.png"
-);
+/*const cubeTexture = textureLoader.load( "3dModels/porsche_911/textures/930_chromes_baseColor.png" );
 const cubeMaterialTexture = new THREE.MeshPhongMaterial({ map: cubeTexture });
 const cubeTextura = new THREE.Mesh(cubeGeometry, cubeMaterialTexture);
 
@@ -106,7 +102,7 @@ cubeTextura.position.x = 1;
 cubeTextura.receiveShadow = true;
 cubeTextura.castShadow = true;
 
-scene.add(cubeTextura);
+scene.add(cubeTextura);*/
 
 // Árvore
 loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
@@ -145,11 +141,11 @@ function animar() {
   //cube.rotation.x += 0.05;
   //cube.rotation.y += 0.05;
 
-  //orbitControls.update();
+  orbitControls.update();
 
   // Calcula o tempo entre os frames - Essencial
-  const delta = clock.getDelta();
-  FPSControls.update(delta);
+  /*const delta = clock.getDelta();
+  FPSControls.update(delta);*/
 
   renderer.render(scene, camera);
 }

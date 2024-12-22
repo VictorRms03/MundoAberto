@@ -34,7 +34,7 @@ const textureLoader = new THREE.TextureLoader();
 /* Controles */
 
 // OrbitControls
-const orbitControls = new OrbitControls(camera, renderer.domElement);
+//const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 // FirstPersonControls
 const FPSControls = new FirstPersonControls(camera, renderer.domElement);
@@ -42,7 +42,6 @@ FPSControls.movementSpeed = 5;
 FPSControls.lookSpeed = 0.1;
 FPSControls.lookVertical = true;
 
-// Inicialmente, desativa os controles de FPS
 FPSControls.enabled = false;
 
 /* Luzes */
@@ -63,31 +62,58 @@ scene.add(ambientLight);
 
 // Solo
 const groundGeometry = new THREE.PlaneGeometry(7, 7);
-const texturaGrama = textureLoader.load('./assets/textures/Grama/Poliigon_GrassPatchyGround_4585_Preview1.png')
+const texturaGrama = textureLoader.load('./assets/textures/Grama/2K/Poliigon_GrassPatchyGround_4585_BaseColor.jpg')
 const groundMaterial = new THREE.MeshStandardMaterial({ map: texturaGrama });
 groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
-scene.add(ground);
+scene.add( ground );
 
-// Árvore
-loader.load('./assets/3dModels/tree/scene.gltf', function (gltf) {
-  gltf.scene.scale.set(1, 1, 1);
-  scene.add(gltf.scene);
-}, undefined, function (error) {
-  console.log(error);
-});
+// Árvores
+loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
+
+  let treeModel = gltf.scene;
+  treeModel.scale.set(2, 2, 2) // Tamanho
+
+  for ( let i=0; i<100; i++ ) {
+
+    let positionX = Math.random() * ( 3 - (-3) ) + (-3);
+    let positionZ = Math.random() * ( 3 - (-3) ) + (-3);
+
+
+    if ( !( positionX > 1.5 && positionX < 2.5 ) && !( positionZ > 1.5 && positionZ < 2.5 ) ) { //Evitar Posição da Cabana
+
+      let tree = treeModel.clone();
+      tree.position.set( positionX , 0 , positionZ ); // Posição
+      tree.rotation.y = 30*i; 
+
+      scene.add( tree );
+
+    }
+
+  }
+
+}, undefined, function( error ) {
+
+  console.log( error );
+
+} );
 
 // Cabana
-loader.load('./assets/3dModels/shelter/scene.gltf', function (gltf) {
-  gltf.scene.scale.set(0.015, 0.015, 0.015);
-  gltf.scene.position.set(2, 0.1, 2);
-  gltf.scene.rotation.y = 200;
-  scene.add(gltf.scene);
-}, undefined, function (error) {
-  console.log(error);
-});
+loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
+
+  gltf.scene.scale.set(0.015, 0.015, 0.015); // Tamanho
+  gltf.scene.position.set(2, 0.1, 2); // Posição
+  gltf.scene.rotation.y = 200; // Rotação
+
+  scene.add( gltf.scene );
+
+}, undefined, function( error ) {
+
+  console.log( error );
+
+} );
 
 // Lobo
 loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
@@ -100,18 +126,20 @@ loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
 });
 
 /* Função de animação */
+const clock = new THREE.Clock();
+
 function animar() {
+
   requestAnimationFrame(animar);
 
-  // Calcula o tempo entre os frames
   const delta = clock.getDelta();
   FPSControls.update(delta); // Atualiza os controles apenas se habilitado
+  //orbitControls.update();
 
   renderer.render(scene, camera);
+
 }
 
-// Inicia a animação
-const clock = new THREE.Clock();
 animar();
 
 /* Controle de Mouse e Teclado */

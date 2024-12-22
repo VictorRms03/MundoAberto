@@ -59,6 +59,10 @@ scene.add(directionalLight);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
+/* Carregador de Textura */
+
+const textureLoader = new THREE.TextureLoader();
+
 /* Objetos */
 
 // Solo
@@ -93,6 +97,22 @@ cube.receiveShadow = true;
 cube.castShadow = true;
 
 scene.add(cube);
+
+// Cubo para teste de textura
+
+const cubeTexture = textureLoader.load(
+  "3dModels/porsche_911/textures/930_chromes_baseColor.png"
+);
+const cubeMaterialTexture = new THREE.MeshPhongMaterial({ map: cubeTexture });
+const cubeTextura = new THREE.Mesh(cubeGeometry, cubeMaterialTexture);
+
+cubeTextura.position.y = 1;
+cubeTextura.position.x = 1;
+
+cubeTextura.receiveShadow = true;
+cubeTextura.castShadow = true;
+
+scene.add(cubeTextura);
 
 // Porsche 911
 /*loader.load( './assets/3dModels/porsche_911/scene.gltf', function ( gltf ) {

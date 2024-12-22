@@ -79,3 +79,4 @@ function animar() {
 }
 
 // Inicia a animação
+animar();

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";  //Para importar outro tipo de objeto, entre na pasta 'loaders' e importe o carregador necessário
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";  
 import { FirstPersonControls } from "three/addons/controls/FirstPersonControls.js";
 
 /* Cena, Câmera, Renderizador e Carregadores */
@@ -37,21 +37,22 @@ const textureLoader = new THREE.TextureLoader();
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 // FirstPersonControls
-/*const FPSControls = new FirstPersonControls(camera, renderer.domElement);
+const FPSControls = new FirstPersonControls(camera, renderer.domElement);
 FPSControls.movementSpeed = 5;
 FPSControls.lookSpeed = 0.1;
-FPSControls.lookVertical = true;*/
+FPSControls.lookVertical = true;
+
+// Inicialmente, desativa os controles de FPS
+FPSControls.enabled = false;
 
 /* Luzes */
 
 // Luz Direcional
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(5, 10, 5);
-
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
 directionalLight.shadow.mapSize.height = 1024;
-
 scene.add(directionalLight);
 
 // Luz ambiente
@@ -62,90 +63,38 @@ scene.add(ambientLight);
 
 // Solo
 const groundGeometry = new THREE.PlaneGeometry(7, 7);
-const groundMaterial = new THREE.MeshStandardMaterial( { color: 0xBA8E23 } );
-groundMaterial.side = THREE.DoubleSide; //Apenas para renderizar o outro lado do piso
+const groundMaterial = new THREE.MeshStandardMaterial({ color: 0xBA8E23 });
+groundMaterial.side = THREE.DoubleSide;
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-
 ground.rotation.x = -Math.PI / 2;
-
 ground.receiveShadow = true;
-
 scene.add(ground);
 
-// Cubo para testes de luz
-/*const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-const cubeMaterial = new THREE.MeshStandardMaterial( { 
-
-  color: 0x00ff00, 
-
-  metalness: 1, 
-  roughness: 0.5 
-
-} );
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-cube.position.y = 1;
-
-cube.receiveShadow = true;
-cube.castShadow = true;
-
-scene.add(cube);*/
-
-// Cubo para teste de textura
-/*const cubeTexture = textureLoader.load( "3dModels/porsche_911/textures/930_chromes_baseColor.png" );
-const cubeMaterialTexture = new THREE.MeshPhongMaterial({ map: cubeTexture });
-const cubeTextura = new THREE.Mesh(cubeGeometry, cubeMaterialTexture);
-
-cubeTextura.position.y = 1;
-cubeTextura.position.x = 1;
-
-cubeTextura.receiveShadow = true;
-cubeTextura.castShadow = true;
-
-scene.add(cubeTextura);*/
-
 // Árvore
-loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
-
+loader.load('./assets/3dModels/tree/scene.gltf', function (gltf) {
   gltf.scene.scale.set(1, 1, 1);
-
-  scene.add( gltf.scene );
-
-}, undefined, function( error ) {
-
-  console.log( error );
-
-} );
+  scene.add(gltf.scene);
+}, undefined, function (error) {
+  console.log(error);
+});
 
 // Cabana
-loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
-
-  gltf.scene.scale.set(0.005, 0.005, 0.005); // Tamanho
-
-  gltf.scene.position.set(2, 0.1, 2); // Posição
-
-  gltf.scene.rotation.y = 200; // Rotação
-
-  scene.add( gltf.scene );
-
-}, undefined, function( error ) {
-
-  console.log( error );
-
-} );
+loader.load('./assets/3dModels/shelter/scene.gltf', function (gltf) {
+  gltf.scene.scale.set(0.005, 0.005, 0.005);
+  gltf.scene.position.set(2, 0.1, 2);
+  gltf.scene.rotation.y = 200;
+  scene.add(gltf.scene);
+}, undefined, function (error) {
+  console.log(error);
+});
 
 /* Função de animação */
 function animar() {
   requestAnimationFrame(animar);
 
-  //cube.rotation.x += 0.05;
-  //cube.rotation.y += 0.05;
-
-  orbitControls.update();
-
-  // Calcula o tempo entre os frames - Essencial
-  /*const delta = clock.getDelta();
-  FPSControls.update(delta);*/
+  // Calcula o tempo entre os frames
+  const delta = clock.getDelta();
+  FPSControls.update(delta); // Atualiza os controles apenas se habilitado
 
   renderer.render(scene, camera);
 }
@@ -153,3 +102,53 @@ function animar() {
 // Inicia a animação
 const clock = new THREE.Clock();
 animar();
+
+/* Controle de Mouse e Teclado */
+
+// Detectar o movimento do mouse
+let mouseMoved = false;
+
+document.addEventListener('mousemove', () => {
+  mouseMoved = true;
+  FPSControls.enabled = true; // Ativa os controles se o mouse for movido
+  clearTimeout(mouseTimeout); // Limpa o timeout para impedir desativação
+  handleMouseStop();
+});
+
+// Função que desativa os controles FPS quando o mouse não está mais se movendo
+let mouseTimeout;
+
+function handleMouseStop() {
+  mouseTimeout = setTimeout(() => {
+    mouseMoved = false;
+    if (!isAnyKeyPressed()) {
+      FPSControls.enabled = false; // Desativa os controles se o mouse parar e nenhuma tecla estiver pressionada
+    }
+  }, 100);
+}
+
+// Estado para monitorar se as teclas WASD estão pressionadas
+const keysPressed = { w: false, a: false, s: false, d: false };
+
+// Função para verificar se alguma tecla WASD está pressionada
+function isAnyKeyPressed() {
+  return keysPressed.w || keysPressed.a || keysPressed.s || keysPressed.d;
+}
+
+// Adiciona ouvintes para pressionamento de teclas
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd') {
+    keysPressed[event.key] = true;
+    FPSControls.enabled = true; // Ativa os controles quando uma tecla é pressionada
+  }
+});
+
+// Adiciona ouvintes para liberação de teclas
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd') {
+    keysPressed[event.key] = false;
+    if (!isAnyKeyPressed() && !mouseMoved) {
+      FPSControls.enabled = false; // Desativa os controles se nenhuma tecla estiver pressionada e o mouse não se mover
+    }
+  }
+});

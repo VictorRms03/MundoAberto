@@ -70,46 +70,31 @@ ground.rotation.x = -Math.PI / 2;
 
 ground.receiveShadow = true;
 
-scene.add(ground);
+scene.add( ground );
 
-// Cubo para testes de luz
-/*const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-const cubeMaterial = new THREE.MeshStandardMaterial( { 
-
-  color: 0x00ff00, 
-
-  metalness: 1, 
-  roughness: 0.5 
-
-} );
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-cube.position.y = 1;
-
-cube.receiveShadow = true;
-cube.castShadow = true;
-
-scene.add(cube);*/
-
-// Cubo para teste de textura
-/*const cubeTexture = textureLoader.load( "3dModels/porsche_911/textures/930_chromes_baseColor.png" );
-const cubeMaterialTexture = new THREE.MeshPhongMaterial({ map: cubeTexture });
-const cubeTextura = new THREE.Mesh(cubeGeometry, cubeMaterialTexture);
-
-cubeTextura.position.y = 1;
-cubeTextura.position.x = 1;
-
-cubeTextura.receiveShadow = true;
-cubeTextura.castShadow = true;
-
-scene.add(cubeTextura);*/
-
-// Árvore
+// Árvores
 loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 
-  gltf.scene.scale.set(1, 1, 1);
+  let treeModel = gltf.scene;
+  treeModel.scale.set(2, 2, 2) // Tamanho
 
-  scene.add( gltf.scene );
+  for ( let i=0; i<100; i++ ) {
+
+    let positionX = Math.random() * ( 3 - (-3) ) + (-3);
+    let positionZ = Math.random() * ( 3 - (-3) ) + (-3);
+
+
+    if ( !( positionX > 1.5 && positionX < 2.5 ) && !( positionZ > 1.5 && positionZ < 2.5 ) ) { //Evitar Posição da Cabana
+
+      let tree = treeModel.clone();
+      tree.position.set( positionX , 0 , positionZ ); // Posição
+      tree.rotation.y = 30*i; 
+
+      scene.add( tree );
+
+    }
+
+  }
 
 }, undefined, function( error ) {
 
@@ -121,9 +106,7 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
 
   gltf.scene.scale.set(0.005, 0.005, 0.005); // Tamanho
-
   gltf.scene.position.set(2, 0.1, 2); // Posição
-
   gltf.scene.rotation.y = 200; // Rotação
 
   scene.add( gltf.scene );

@@ -70,6 +70,19 @@ ground.castShadow = true;
 
 scene.add( ground );
 
+// Pedra
+const rockGeometry = new THREE.SphereGeometry( 0.02, 32, 16 );
+const rockTexture = textureLoader.load( './assets/textures/RockTexture.jpg' );
+const rockMaterial = new THREE.MeshStandardMaterial({ map: rockTexture });
+const rock = new THREE.Mesh( rockGeometry, rockMaterial );
+
+rock.position.set(1.15, 0.01, 2.15);
+
+rock.receiveShadow = true;
+rock.castShadow = true;
+
+scene.add(rock);
+
 // Árvores
 loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
 

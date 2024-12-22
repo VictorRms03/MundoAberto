@@ -78,11 +78,9 @@ loader.load( './assets/3dModels/tree/scene.gltf', function ( gltf ) {
   treeModel.traverse( function(node) {
     if (node.isMesh) {
       node.castShadow = true;
+      node.receiveShadow = true;
     }
   });
-
-  treeModel.receiveShadow = true;
-  treeModel.castShadow = true;
 
   treeModel.scale.set(2, 2, 2) // Tamanho
 
@@ -120,6 +118,7 @@ loader.load( './assets/3dModels/shelter/scene.gltf', function( gltf ) {
   shelterModel.traverse( function(node) {
     if ( node.isMesh ) {
       node.castShadow = true;
+      node.receiveShadow = true;
     }
   });
 
@@ -141,6 +140,7 @@ loader.load('./assets/3dModels/wolf/scene.gltf', function (gltf) {
   wolfModel.traverse( function(node) {
     if ( node.isMesh ) {
       node.castShadow = true;
+      node.receiveShadow = true;
     }
   });
 

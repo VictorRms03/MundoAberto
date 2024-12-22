@@ -2,7 +2,7 @@
 
 Este é um projeto desenvolvido durante a disciplina de Computação Gráfica no curso de Bacharel em Ciência da Computação. 
 
-O projeto apresenta um mundo... <!--(CONTINUAR A DESCRIÇÃO DO PROJETO FALANDO O QUE TEM NELE)-->
+O projeto apresenta um mundo aberto de uma pequena floresta e um lobo, contendo arvores geradas aleatóriamente, uma cabana e uma pedra. Utilizando recursos de Iluminação, textura e modelos3D.
 
 ## ☕ Pré-requisitos
 
@@ -34,4 +34,17 @@ E então, abra o link disponibilizado no terminal pelo vite.
 
 * https://threejs.org/docs/index.html#manual/en/
 
-<!-- CONTINUAR INSERINDO AS REFERÊNCIAS -->
+### Modelos 3D
+
+* https://sketchfab.com/feed
+
+### Texturas
+
+* https://www.freepik.com/
+* https://polyhaven.com/textures/
+
+### Desenvolvedores
+
+* Maria Júlia Fantagussi
+* Victor Ramos
+* Vinicius Ramos
